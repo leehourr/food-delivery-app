@@ -7,14 +7,14 @@ export default defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Title',
-      type: 'Category name',
+      title: 'Category name',
+      type: 'string',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'image',
       title: 'Image of Category',
-      type: 'Image of Category',
+      type: 'image',
     }),
   ],
 })

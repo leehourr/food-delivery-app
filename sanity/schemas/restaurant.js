@@ -49,14 +49,14 @@ export default defineType({
       name: 'type',
       title: 'Category',
       type: 'reference',
-      to: [{tyoe: 'category'}],
+      to: [{type: 'category'}],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'dishes',
       title: 'Dishes',
       type: 'array',
-      of: [{tyoe: 'reference', to: [{type: 'dish'}]}],
+      of: [{type: 'reference', to: [{type: 'dish'}]}],
     }),
   ],
 })
