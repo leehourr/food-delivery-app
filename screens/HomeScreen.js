@@ -1,5 +1,5 @@
 import { View, Text, Image, TextInput, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   AdjustmentsHorizontalIcon,
@@ -8,8 +8,28 @@ import {
 } from "react-native-heroicons/outline";
 import Categories from "../components/Categories";
 import FeatureGrow from "../components/FeatureGrow/FeatureGrow";
+import client from "../sanity";
 
 const HomeScreen = () => {
+  const [featuredCategory, setFeaturedCategory] = useState([]);
+
+  useEffect(() => {
+    client
+      .fetch(
+        `*[_type == 'featured'] { ...,
+              restaurants[]->{
+                 ...,dishes[]->,
+                        type=>{
+                        name
+                         }
+                       }
+                    }`
+      )
+      .then((data) => {
+        // console.log(data);
+        setFeaturedCategory(data);
+      });
+  }, []);
   return (
     <SafeAreaView className="bg-white pt-5 pb-24">
       <View className="pb-3 flex-row items-center mx-2 justify-between">
@@ -41,19 +61,14 @@ const HomeScreen = () => {
       <ScrollView className="bg-gray-100 mt-2">
         <Categories />
         {/* FeatureGrow */}
-
-        <FeatureGrow
-          title="Featured"
-          description="Paid placement from our partner."
-        />
-        <FeatureGrow
-          title="Tasty Discounts"
-          description="Everyone's been enjoying their juicy discount!"
-        />
-        <FeatureGrow
-          title="Other near you!"
-          description="Why not support your local restaurant!"
-        />
+        {featuredCategory?.map((i) => (
+          <FeatureGrow
+            key={i._id}
+            id={i._id}
+            title={i.name}
+            description={i.short_description}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );

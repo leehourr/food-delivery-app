@@ -1,9 +1,31 @@
 import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
 import RestaurantCard from "../Restaurant/RestaurantCard";
+import client from "../../sanity";
 
-const FeatureGrow = ({ title, description, featureCategory }) => {
+const FeatureGrow = ({ id, title, description }) => {
+  const [restaurent, setRestaurent] = useState([]);
+  console.log("restaurant", id);
+
+  useEffect(() => {
+    client
+      .fetch(
+        `*[_type == 'featured' && _id=='${id}'] { ...,
+          restaurants[]->{
+             ...,dishes[]->,
+                    type->{
+                    title
+                     }
+                   }
+                }`
+      )
+      .then((data) => {
+        console.log("restaurant", data[0]?.restaurants);
+        setRestaurent(data[0]?.restaurants);
+      });
+  }, []);
+
   return (
     <View className="bg-gray-100">
       <View className="mt-4 flex-row items-center justify-between px-4">
@@ -18,54 +40,21 @@ const FeatureGrow = ({ title, description, featureCategory }) => {
         className="pt-4"
       >
         {/* Restaurant card */}
-        <RestaurantCard
-          id={123}
-          image="https://firebasestorage.googleapis.com/v0/b/food-delivery-app-c9d92.appspot.com/o/orderAgain%2FPizza-from-Scratch_EXPS_FT20_8621_F_0505_1_home.jpg?alt=media&token=9e088a4e-d147-431d-ad04-37b3a2b08e37"
-          title="Sushi"
-          rating={5.2}
-          genre="Jpanese"
-          address="japan"
-          short_description="Sushi handmade"
-          dishes={[]}
-          long={20}
-          lat={10}
-        />
-        <RestaurantCard
-          id={123}
-          image="https://firebasestorage.googleapis.com/v0/b/food-delivery-app-c9d92.appspot.com/o/orderAgain%2FPizza-from-Scratch_EXPS_FT20_8621_F_0505_1_home.jpg?alt=media&token=9e088a4e-d147-431d-ad04-37b3a2b08e37"
-          title="Sushi"
-          rating={5.2}
-          genre="Jpanese"
-          address="japan"
-          short_description="Sushi handmade"
-          dishes={[]}
-          long={20}
-          lat={10}
-        />
-        <RestaurantCard
-          id={123}
-          image="https://firebasestorage.googleapis.com/v0/b/food-delivery-app-c9d92.appspot.com/o/orderAgain%2FPizza-from-Scratch_EXPS_FT20_8621_F_0505_1_home.jpg?alt=media&token=9e088a4e-d147-431d-ad04-37b3a2b08e37"
-          title="Sushi"
-          rating={5.2}
-          genre="Jpanese"
-          address="japan"
-          short_description="Sushi handmade"
-          dishes={[]}
-          long={20}
-          lat={10}
-        />
-        <RestaurantCard
-          id={123}
-          image="https://firebasestorage.googleapis.com/v0/b/food-delivery-app-c9d92.appspot.com/o/orderAgain%2FPizza-from-Scratch_EXPS_FT20_8621_F_0505_1_home.jpg?alt=media&token=9e088a4e-d147-431d-ad04-37b3a2b08e37"
-          title="Sushi"
-          rating={5.2}
-          genre="Jpanese"
-          address="japan"
-          short_description="Sushi handmade"
-          dishes={[]}
-          long={20}
-          lat={10}
-        />
+        {restaurent?.map((i) => (
+          <RestaurantCard
+            key={i._id}
+            id={i._id}
+            image={i.image}
+            title={i.name}
+            rating={`. ${i.rating}`}
+            address={i.address}
+            short_description={i.short_description}
+            // dishes={[]}
+            genre={i.type?.title}
+            long={i.long}
+            lat={i.lat}
+          />
+        ))}
       </ScrollView>
     </View>
   );
