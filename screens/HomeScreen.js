@@ -11,7 +11,7 @@ import FeatureGrow from "../components/FeatureGrow/FeatureGrow";
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView className="bg-white pt-5">
+    <SafeAreaView className="bg-white pt-5 pb-24">
       <View className="pb-3 flex-row items-center mx-2 justify-between">
         <View className=" flex-row items-center">
           <Image
@@ -40,9 +40,21 @@ const HomeScreen = () => {
       </View>
       <ScrollView className="bg-gray-100 mt-2">
         <Categories />
+        {/* FeatureGrow */}
+
+        <FeatureGrow
+          title="Featured"
+          description="Paid placement from our partner."
+        />
+        <FeatureGrow
+          title="Tasty Discounts"
+          description="Everyone's been enjoying their juicy discount!"
+        />
+        <FeatureGrow
+          title="Other near you!"
+          description="Why not support your local restaurant!"
+        />
       </ScrollView>
-      {/* FeatureGrow */}
-      <FeatureGrow />
     </SafeAreaView>
   );
 };
