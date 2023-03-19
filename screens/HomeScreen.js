@@ -61,14 +61,18 @@ const HomeScreen = () => {
       <ScrollView className="bg-gray-100 mt-2">
         <Categories />
         {/* FeatureGrow */}
-        {featuredCategory?.map((i) => (
-          <FeatureGrow
-            key={i._id}
-            id={i._id}
-            title={i.name}
-            description={i.short_description}
-          />
-        ))}
+        {featuredCategory
+          ?.sort((a, b) => {
+            return new Date(a._updatedAt) - new Date(b._updatedAt);
+          })
+          .map((i) => (
+            <FeatureGrow
+              key={i._id}
+              id={i._id}
+              title={i.name}
+              description={i.short_description}
+            />
+          ))}
       </ScrollView>
     </SafeAreaView>
   );

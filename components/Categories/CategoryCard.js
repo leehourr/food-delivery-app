@@ -1,5 +1,6 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+// import { ImgUrl } from "../../sanity";
 
 const CategoryCard = ({ image, title }) => {
   return (

@@ -6,7 +6,7 @@ import client from "../../sanity";
 
 const FeatureGrow = ({ id, title, description }) => {
   const [restaurent, setRestaurent] = useState([]);
-  console.log("restaurant", id);
+  // console.log("restaurant", id);
 
   useEffect(() => {
     client
@@ -21,7 +21,7 @@ const FeatureGrow = ({ id, title, description }) => {
                 }`
       )
       .then((data) => {
-        console.log("restaurant", data[0]?.restaurants);
+        // console.log("restaurant", data[0]?.restaurants);
         setRestaurent(data[0]?.restaurants);
       });
   }, []);
@@ -40,7 +40,7 @@ const FeatureGrow = ({ id, title, description }) => {
         className="pt-4"
       >
         {/* Restaurant card */}
-        {restaurent?.map((i) => (
+        {restaurent.map((i) => (
           <RestaurantCard
             key={i._id}
             id={i._id}
@@ -49,7 +49,7 @@ const FeatureGrow = ({ id, title, description }) => {
             rating={`. ${i.rating}`}
             address={i.address}
             short_description={i.short_description}
-            // dishes={[]}
+            dishes={i.dishes}
             genre={i.type?.title}
             long={i.long}
             lat={i.lat}
