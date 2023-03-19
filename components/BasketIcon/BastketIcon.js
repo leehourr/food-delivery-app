@@ -9,6 +9,7 @@ const BastketIcon = () => {
   const items = useSelector(selectBasketItems);
   const total = useSelector(selectTotalItems);
 
+  if (items.length === 0) return null;
   return (
     <View className="absolute bottom-8 w-full z-50">
       <TouchableOpacity

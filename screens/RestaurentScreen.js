@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ImgUrl } from "../sanity";
 import {
@@ -12,9 +12,15 @@ import {
 } from "react-native-heroicons/outline";
 import DishRow from "../components/DishRow/DishRow";
 import BastketIcon from "../components/BasketIcon/BastketIcon";
+import { store } from "../Store/store";
+import { setRestaurent } from "../Store/restaurantSlice";
+import { selectBasketItems } from "../Store/basketSlice";
+import { useSelector } from "react-redux";
 
 const RestaurentScreen = () => {
   const navigate = useNavigation();
+  const items = useSelector(selectBasketItems);
+
   const {
     params: {
       id,
@@ -29,6 +35,23 @@ const RestaurentScreen = () => {
       lat,
     },
   } = useRoute();
+
+  useEffect(() => {
+    store.dispatch(
+      setRestaurent({
+        id,
+        image,
+        title,
+        rating,
+        genre,
+        address,
+        short_description,
+        dishes,
+        long,
+        lat,
+      })
+    );
+  }, []);
   // console.log("params", dishes);
   return (
     <>
@@ -69,7 +92,7 @@ const RestaurentScreen = () => {
             <ChevronDoubleRightIcon color="#00CCBB" />
           </TouchableOpacity>
         </View>
-        <View className="pb-36">
+        <View className={items.length === 0 ? "pb-10" : "pb-36"}>
           <Text className="px-4 pt-4 mb-3 font-bold text-xl">Menu</Text>
           {dishes.map((i) => (
             <DishRow
