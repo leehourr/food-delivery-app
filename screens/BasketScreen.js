@@ -27,12 +27,12 @@ const BasketScreen = () => {
   const total = useSelector(selectTotalItems);
   const [groupItem, setGroupItem] = useState([]);
   useMemo(() => {
-    console.log("items", items);
+    // console.log("items", items);
     const groupItems = items.reduce((results, item) => {
       (results[item.id] = results[item.id] || []).push(item);
       return results;
     }, {});
-    console.log("groupItems", groupItems);
+    // console.log("groupItems", groupItems);
     setGroupItem(groupItems);
   }, [items]);
 

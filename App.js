@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "./Store/store";
 import BasketScreen from "./screens/BasketScreen";
 import PrepareOrderScreen from "./screens/PrepareOrderScreen";
+import DeliveryScreen from "./screens/DeliveryScreen";
 
 NativeWindStyleSheet.setOutput({
   web: "css",
@@ -40,6 +41,11 @@ export default function App() {
           <Stack.Screen
             name="PrepareOrderScreen"
             component={PrepareOrderScreen}
+            options={{ headerShown: false, presentation: "fullScreenModal" }}
+          />
+          <Stack.Screen
+            name="Delivery"
+            component={DeliveryScreen}
             options={{ headerShown: false, presentation: "fullScreenModal" }}
           />
         </Stack.Navigator>
