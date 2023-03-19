@@ -5,6 +5,7 @@ import { MinusCircleIcon, PlusCircleIcon } from "react-native-heroicons/solid";
 import { store } from "../../Store/store";
 import {
   addBasket,
+  removeBasket,
   selectBasketItems,
   selectSpecificItem,
 } from "../../Store/basketSlice";
@@ -16,9 +17,14 @@ const DishRow = ({ id, name, desc, price, image }) => {
   const items = useSelector((state) => selectSpecificItem(state, id));
   //   const items = useSelector((state) => state);
 
-  console.log("basket", items);
+  //   console.log("basket", items);
   const addItemHandler = () => {
     store.dispatch(addBasket({ id, name, desc, price, image }));
+  };
+
+  const removeItemHandler = () => {
+    if (items.length === 0) return;
+    store.dispatch(removeBasket({ id }));
   };
   return (
     <>
@@ -43,7 +49,7 @@ const DishRow = ({ id, name, desc, price, image }) => {
       {isClick && (
         <View className="bg-white px-4">
           <View className="flex-row items-center space-x-2 pb-3">
-            <TouchableOpacity>
+            <TouchableOpacity onPress={removeItemHandler}>
               <MinusCircleIcon size={40} color="#00CCBB" />
             </TouchableOpacity>
             <Text>{items.length}</Text>
