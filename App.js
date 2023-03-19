@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Modal, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
@@ -7,6 +7,7 @@ import "react-native-url-polyfill/auto";
 import RestaurentScreen from "./screens/RestaurentScreen";
 import { Provider } from "react-redux";
 import { store } from "./Store/store";
+import BasketScreen from "./screens/BasketScreen";
 
 NativeWindStyleSheet.setOutput({
   web: "css",
@@ -29,6 +30,11 @@ export default function App() {
             name="Restaurent"
             component={RestaurentScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Basket"
+            component={BasketScreen}
+            options={{ headerShown: false, presentation: "modal" }}
           />
         </Stack.Navigator>
       </Provider>

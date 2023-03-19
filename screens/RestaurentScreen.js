@@ -69,7 +69,7 @@ const RestaurentScreen = () => {
             <ChevronDoubleRightIcon color="#00CCBB" />
           </TouchableOpacity>
         </View>
-        <View>
+        <View className="pb-36">
           <Text className="px-4 pt-4 mb-3 font-bold text-xl">Menu</Text>
           {dishes.map((i) => (
             <DishRow
