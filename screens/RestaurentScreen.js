@@ -10,6 +10,7 @@ import {
   QuestionMarkCircleIcon,
   StarIcon,
 } from "react-native-heroicons/outline";
+import DishRow from "../components/DishRow/DishRow";
 
 const RestaurentScreen = () => {
   const navigate = useNavigation();
@@ -27,7 +28,7 @@ const RestaurentScreen = () => {
       lat,
     },
   } = useRoute();
-  console.log("params", image);
+  // console.log("params", dishes);
   return (
     <ScrollView>
       <View className="relative">
@@ -44,8 +45,7 @@ const RestaurentScreen = () => {
           <ArrowLeftIcon size={20} color="#00CCBB" />
         </TouchableOpacity>
       </View>
-
-      <View className="bg-white flex pt-4  text-gray-500 space-y-1">
+      <View className="bg-white flex pt-4 space-y-1">
         <View className="pl-4 pb-3">
           <Text className="font-bold text-3xl">{title}</Text>
           <View className="flex-row items-center space-x-2 text-gray-500">
@@ -65,6 +65,19 @@ const RestaurentScreen = () => {
           </Text>
           <ChevronDoubleRightIcon color="#00CCBB" />
         </TouchableOpacity>
+      </View>
+      <View>
+        <Text className="px-4 pt-4 mb-3 font-bold text-xl">Menu</Text>
+        {dishes.map((i) => (
+          <DishRow
+            key={i._id}
+            id={i._id}
+            name={i.name}
+            desc={i.short_description}
+            price={i.Price}
+            image={i.image}
+          />
+        ))}
       </View>
     </ScrollView>
   );
